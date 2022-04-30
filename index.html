@@ -9,8 +9,9 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Build6.json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Build7.json", {onProgress: UnityProgress});
     </script>
+
 
     <script type = "text/javascript" language = "javascript">
     var fullscreenID;
@@ -158,6 +159,13 @@
         unityInstance.SendMessage('AdsManager', 'TryToLoadCustomRewardVideo');
       }
     }
+    else if (method === "joinGroup") {
+      if (data === "already.member") {
+        unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
+      } else if (data == "group.access.denied" || data == "common.finder") {
+        unityInstance.SendMessage('VKMechanicsController', 'NoGroup');
+      }
+    }
   }
 
   function OKInitialization() {
@@ -196,6 +204,10 @@
         {"type": "link", "url": link}
       ]};
       FAPI.UI.postMediatopic(attachment);
+    }
+
+    function OKJoinGroup(id) {
+      FAPI.invokeUIMethod("joinGroup", id);
     }
 
     // VK
@@ -308,6 +320,14 @@
       vkBridge.send("VKWebAppAddToFavorites").then(res => {
         if (res.result == true) {
           unityInstance.SendMessage('VKMechanicsController', 'InFavorite');
+        }
+      })
+    }
+
+    function VKJoinGroup(id) {
+      vkBridge.send("VKWebAppJoinGroupResult", {"group_id": id}).then(res => {
+        if (res.result === true) {
+          unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
         }
       })
     }
