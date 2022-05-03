@@ -332,6 +332,8 @@
         if (res.result === true) {
           unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
         }
+      }).catch(err => {
+        console.log(err);
       })
     }
 
