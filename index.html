@@ -277,8 +277,9 @@
 
     function VKInvite() {
       vkBridge.send("VKWebAppShowInviteBox").catch(err => {
-        console.log(err);
-        VK.callMethod("showInviteBox");
+        if (err.error_type !== "client_error") {
+          VK.callMethod("showInviteBox");
+        }
       })
     }
 
