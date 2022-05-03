@@ -327,6 +327,7 @@
     }
 
     function VKJoinGroup(id) {
+      console.log(id);
       vkBridge.send("VKWebAppJoinGroupResult", {"group_id": id}).then(res => {
         console.log(res);
         if (res.result === true) {
