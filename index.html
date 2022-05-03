@@ -328,6 +328,7 @@
 
     function VKJoinGroup(id) {
       vkBridge.send("VKWebAppJoinGroupResult", {"group_id": id}).then(res => {
+        console.log(res);
         if (res.result === true) {
           unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
         }
