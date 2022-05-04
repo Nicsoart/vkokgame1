@@ -163,6 +163,7 @@
       if (data === "already.member") {
         unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
       } else if (data == "group.access.denied" || data == "common.finder") {
+        console.log(data);
         unityInstance.SendMessage('VKMechanicsController', 'NoGroup');
       }
     }
@@ -327,14 +328,12 @@
     }
 
     function VKJoinGroup(id) {
-      console.log(id);
       vkBridge.send("VKWebAppJoinGroup", {"group_id": Number(id)}).then(res => {
-        console.log(res);
         if (res.result === true) {
           unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
         }
       }).catch(err => {
-        console.log(err);
+        unityInstance.SendMessage('VKMechanicsController', 'NoGroup');
       })
     }
 
