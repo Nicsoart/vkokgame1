@@ -163,7 +163,6 @@
       if (data === "already.member") {
         unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
       } else if (data == "group.access.denied" || data == "common.finder") {
-        console.log(data);
         unityInstance.SendMessage('VKMechanicsController', 'NoGroup');
       }
     }
@@ -175,7 +174,6 @@
       function() {
         var geo_location = rParams.ip_geo_location.split(",");
         var language = geo_location[0];
-        console.log(language);
         unityInstance.SendMessage('PlayerManager', 'GetPlayerLanguage', language);
         unityInstance.SendMessage('PlayerManager', 'GetPlayerName', rParams.user_name);
         unityInstance.SendMessage('PlayerManager', 'PlayerAuthorized');
@@ -333,7 +331,9 @@
           unityInstance.SendMessage('VKMechanicsController', 'OpenGroup');
         }
       }).catch(err => {
+        if (err.error_type !== "client_error") {
         unityInstance.SendMessage('VKMechanicsController', 'NoGroup');
+        }
       })
     }
 
